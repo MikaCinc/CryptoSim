@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import LineGraph from 'react-line-graph';
 import { Line } from 'react-chartjs-2';
+import _ from 'lodash';
 
 // import logo from './logo.svg';
 import './App.css';
@@ -14,9 +15,11 @@ const config = {
 
 const App = () => {
 
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(2);
+  const [selected, setSelected] = useState(1);
   const [isRunning, setIsRunning] = useState(true);
   const [coins, setCoins] = useState([{
+    id: 1,
     title: "MASTER COIN",
     nick: "MSC",
     value: 0,
@@ -31,7 +34,7 @@ const App = () => {
 
   const master = () => {
     let rand = Math.floor(Math.random() * 100);
-    if (rand < 20) setSeason(config.seasons[Math.floor(Math.random() * config.seasons.length)]); // Promena sezone
+    if (rand < 5) setSeason(config.seasons[Math.floor(Math.random() * config.seasons.length)]); // Promena sezone
 
     let newValues = [...coins].map(c => {
       const randInner = getRandom(0, 100);
@@ -57,6 +60,7 @@ const App = () => {
 
     if (rand === 50) {
       newValues = [...newValues, {
+        id,
         title: "ALT Coin #" + (id),
         nick: "AC" + (id),
         value: getRandom(1, 100),
@@ -64,10 +68,10 @@ const App = () => {
       }];
 
       setId((curr) => curr + 1);
-    } else if (rand === 40) {
-      let randomAltCoin = getRandom(1, coins.length - 2);
+    } else if (rand === 40) { // Povlacenje sa marketa
+      // let randomAltCoin = getRandom(1, coins.length - 2);
 
-      newValues = [...newValues.filter((c, index) => index !== randomAltCoin)];
+      // newValues = [...newValues.filter((c, index) => index !== randomAltCoin)];
     }
 
     setCoins(newValues);
@@ -95,39 +99,82 @@ const App = () => {
 
   }, [isRunning, coins, season, riseChance]);
 
+  const renderSelected = () => {
+    const coin = coins.filter(c => c.id === selected)[0];
+    if (!coin || !coin.id) return <p>No data availible</p>;
+
+    const { title, nick, value, history } = coin;
+
+    const last100 = history.slice(history.length - 200 > 0 ? history.length - 200 : 0, history.length);
+    const data = {
+      labels: [...last100.map((i, index) => index + 1)],
+      datasets: [
+        {
+          label: title + "'s value",
+          data: last100,
+          fill: false,
+          backgroundColor: '#0000ff',
+          borderColor: '#00ff00',
+          color: '#fff',
+          animation: false
+        },
+      ],
+    };
+    return (
+      <div key={nick}>
+        {/* <h2>{title}</h2>
+        <h1>{value}</h1> */}
+        {!!history.length && <Line
+          data={data}
+          options={{
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+              xAxes: [{
+                ticks: { display: false },
+                gridLines: {
+                  display: false,
+                  drawBorder: false
+                }
+              }],
+              yAxes: [{
+                ticks: { display: false },
+                gridLines: {
+                  display: false,
+                  drawBorder: false
+                }
+              }]
+            }
+          }}
+        />}
+      </div>
+    )
+  }
+
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header> */}
-
-      <div>
-        {
-          coins.map(({ title, nick, value, history }) => {
-            const last100 = history.slice(history.length - 200, history.length);
-            const data = {
-              labels: [...last100.map((i, index) => index + 1)],
-              datasets: [
-                {
-                  label: title + "'s value",
-                  data: last100,
-                  fill: false,
-                  backgroundColor: 'rgb(255, 99, 132)',
-                  borderColor: 'rgba(255, 99, 132, 0.2)',
-                  animation: false
-                },
-              ],
-            };
-
-            return <div key={nick}>
-              <h2>{title}</h2>
-              <h1>{value}</h1>
-              {!!history.length && <Line data={data} />}
-            </div>
-          })
-        }
+      <div className="TopBar">
         <button onClick={() => setIsRunning(true)}>Play</button>
         <button onClick={() => setIsRunning(false)}>Pause</button>
+      </div>
+      <div className="Page">
+        <div className="Sidebar">
+          {
+            coins.map(({ id, title, nick, value }, index) => {
+              return <div
+                className={`CoinCard ${selected === id ? 'selected' : ''}`}
+                key={nick + index}
+                onClick={() => setSelected(id)}
+              >
+                <h2>{title}</h2>
+                <h1>{value}</h1>
+              </div>
+            })
+          }
+        </div>
+        <div className="View">
+          {renderSelected()}
+        </div>
       </div>
     </div>
   );
