@@ -156,6 +156,7 @@ const App = () => {
       <div className="TopBar">
         <button onClick={() => setIsRunning(true)}>Play</button>
         <button onClick={() => setIsRunning(false)}>Pause</button>
+        <button onClick={() => window.open('http://www.mihajlo.engineer', '_blank')}>About Author</button>
       </div>
       <div className="Page">
         <div className="Sidebar">

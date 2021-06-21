@@ -50,6 +50,22 @@
   box-sizing: border-box;
 }
 
+button {
+  border-radius: 10px;
+  border: 2px solid aquamarine;
+  background: transparent;
+  color: white;
+  padding: 10px;
+  margin: 10px 10px 0px 0px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+button:hover {
+  background: aquamarine;
+  color: black;
+}
+
 .TopBar {
   display: flex;
   justify-content: center;
