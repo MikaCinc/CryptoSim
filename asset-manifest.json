@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/CryptoSim/static/css/main.ef29244e.chunk.css",
+    "main.js": "/CryptoSim/static/js/main.8b0a3e3a.chunk.js",
+    "main.js.map": "/CryptoSim/static/js/main.8b0a3e3a.chunk.js.map",
+    "runtime-main.js": "/CryptoSim/static/js/runtime-main.b8903403.js",
+    "runtime-main.js.map": "/CryptoSim/static/js/runtime-main.b8903403.js.map",
+    "static/js/2.53669293.chunk.js": "/CryptoSim/static/js/2.53669293.chunk.js",
+    "static/js/2.53669293.chunk.js.map": "/CryptoSim/static/js/2.53669293.chunk.js.map",
+    "static/js/3.f5b008e8.chunk.js": "/CryptoSim/static/js/3.f5b008e8.chunk.js",
+    "static/js/3.f5b008e8.chunk.js.map": "/CryptoSim/static/js/3.f5b008e8.chunk.js.map",
+    "index.html": "/CryptoSim/index.html",
+    "static/css/main.ef29244e.chunk.css.map": "/CryptoSim/static/css/main.ef29244e.chunk.css.map",
+    "static/js/2.53669293.chunk.js.LICENSE.txt": "/CryptoSim/static/js/2.53669293.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b8903403.js",
+    "static/js/2.53669293.chunk.js",
+    "static/css/main.ef29244e.chunk.css",
+    "static/js/main.8b0a3e3a.chunk.js"
+  ]
+}
